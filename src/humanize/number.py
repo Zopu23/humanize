@@ -359,11 +359,13 @@ def fractional(value: NumberOrString) -> str:
 
     whole_number = int(number)
     frac = Fraction(number - whole_number).limit_denominator(1000)
+    if abs(frac) == 1:
+        whole_number += int(frac)
+        frac = Fraction(0)
+
     numerator = frac.numerator
     denominator = frac.denominator
-    if whole_number and not numerator and denominator == 1:
-        # this means that an integer was passed in
-        # (or variants of that integer like 1.0000)
+    if not numerator:
         return f"{whole_number:.0f}"
 
     if not whole_number:
