@@ -83,6 +83,13 @@ def test_intcomma(
     assert humanize.intcomma(*test_args) == expected
 
 
+@pytest.mark.parametrize("number", [10**400 + 123, -(10**400 + 123)])
+def test_intcomma_arbitrary_precision(number: int) -> None:
+    result = humanize.intcomma(number)
+    assert result == f"{number:,}"
+    assert result.endswith(",123")
+
+
 def test_intword_powers() -> None:
     # make sure that powers & human_powers have the same number of items
     assert len(number.powers) == len(number.human_powers)

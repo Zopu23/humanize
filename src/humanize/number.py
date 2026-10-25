@@ -160,10 +160,10 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
                 value = float(value)
             else:
                 value = int(value)
-        else:
-            if not math.isfinite(float(value)):
-                return _format_not_finite(float(value))
-            float(value)
+        elif not isinstance(value, int):
+            float_value = float(value)
+            if not math.isfinite(float_value):
+                return _format_not_finite(float_value)
     except (TypeError, ValueError):
         return str(value)
 
